@@ -1,0 +1,119 @@
+{
+    "CHANGE_TABLE_MANAGEMENT": {
+        "prefix": "alter",
+        "body": [
+            "USE ${schema_name};",
+            "ALTER TABLE ${table_name} SET TBLPROPERTIES('EXTERNAL' = 'TRUE')"
+        ]
+    },
+    "CHANGE_TABLE_NAME": {
+        "prefix": "alter",
+        "body": [
+            "USE ${schema_name};",
+            "ALTER TABLE ${table_name} RENAME TO ${new_table_name};",
+            ";"
+        ],
+        "description": "Rename a table."
+    },
+    "CHANGE_TABLE_COMMENT": {
+        "prefix": "alter",
+        "body": [
+            "USE ${schema_name};",
+            "ALTER TABLE ${table_name} SET TBLPROPERTIES ('comment' = '${new_comment}');",
+            ";"
+        ],
+        "description": "Change a table's comment."
+    },
+    "CHANGE_COLUMN": {
+        "prefix": "alter",
+        "body": [
+            "USE ${schema_name};",
+            "ALTER TABLE ${table_name} PARTITION (${partition_spec})",
+            "CHANGE COLUMN ${old_column_name} ${new_column_name} ${column_data_type} COMMENT '${column_comment}'",
+            ";"
+        ],
+        "description": "Change a partitioned table's columns."
+    },
+    "CREATE_TABLE_BASIC": {
+        "prefix": "create",
+        "body":[
+            "DROP TABLE IF EXISTS ${schema_name}.${table_name};",
+            "CREATE TABLE ${schema_name}.${table_name} ( ",
+            "\t${column_name} ${column_data_type} COMMENT '${column_comment}'",
+            ")",
+            ";"
+        ],
+        "description": "Create a new Hive table with full basic specifications."
+    },
+    "CREATE_TABLE": {
+        "prefix": "create",
+        "body":[
+            "DROP TABLE IF EXISTS ${schema_name}.${table_name};",
+            "CREATE TABLE ${schema_name}.${table_name} ( ",
+            "\t${column_name} ${column_data_type} COMMENT '${column_comment}'",
+            ")",
+            "COMMENT '${table_comment}'",
+            "ROW FORMAT DELIMITED ",
+            "\tFIELDS TERMINATED BY '|'",
+            "\tLINES TERMINATED BY '\\n'",
+            "STORED AS ",
+            "\tINPUTFORMAT 'org.apache.hadoop.mapred.TextInputFormat' ",
+            "\tOUTPUTFORMAT 'org.apache.hadoop.hive.ql.io.HiveIgnoreKeyTextOutputFormat' ",
+            "LOCATION ",
+            "\t'${HDFS_DIRECTORY}/${table_name}' ",
+            ";"
+        ],
+        "description": "Create a new Hive table with full format specifications."
+    },
+    "CREATE_TABLE_LIKE": {
+        "prefix": "create",
+        "body": [
+            "CREATE TABLE IF NOT EXISTS ${schema_name}.${table_name}",
+            "LIKE ${source_table_schema}.${source_table_name}",
+            ";"
+        ],
+        "description": "Create a table with the same format and structure as another table."
+    },
+    "CREATE_TABLE_AS_SELECT": {
+        "prefix": "create",
+        "body": [
+            "CREATE TABLE IF NOT EXISTS ${schema_name}.${table_name} AS ",
+            "\tSELECT ",
+            "\t\t${column_names}",
+            "\tFROM",
+            "\t\t${source_table_name}",
+            ";"
+        ],
+        "description": "Create a table from the results of a query"
+    },
+    "CREATE_TABLE_AS_SELECT_FORMAT": {
+        "prefix": "create",
+        "body": [
+            "CREATE TABLE IF NOT EXISTS ${schema_name}.${table_name}",
+            "\tROW FORMAT SERDE \"${serde_type}\"",
+            "\tSTORED AS ${storage_type}",
+            "\tAS",
+            "SELECT ",
+            "${column_names}",
+            "FROM ${source_table_name}",
+            ";"
+        ],
+        "description": "Create a table from the results of a query, and specify the storage format"
+    },
+    "INSERT_DYNAMIC": {
+        "prefix": "insert",
+        "body": [
+            "SET hive.exec.dynamic.partition.mode = nonstrict;",
+            "SET hive.exec.dynamic.partition = true;",
+            "SET hive.exec.max.dynamic.partitions.pernode = 10000;",
+            "INSERT OVERWRITE TABLE ${schema_name}.${table_name} PARTITION (${partition_column_names})",
+            "\tSELECT ",
+            "\t\t${column_names}",
+            "\t\t${partition_column_names}",
+            "\tFROM",
+            "\t\t${source_table_name}",
+            ";"
+        ],
+        "description": "Insert into a table using dynamic partitioning."
+    }
+}

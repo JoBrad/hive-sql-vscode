@@ -1,0 +1,26 @@
+{
+    "name": "hive-sql",
+    "displayName": "hive-sql",
+    "description": "Adds support for Hive's variant of the SQL language",
+    "version": "0.0.1",
+    "publisher": "josephtbradley",
+    "engines": {
+        "vscode": "^1.5.0"
+    },
+    "categories": [
+        "Languages"
+    ],
+    "contributes": {
+        "languages": [{
+            "id": "hive-sql",
+            "aliases": ["HiveSQL", "hive-sql", "Hive SQL"],
+            "extensions": [".hql", ".q", ".ql"],
+            "configuration": "./language-configuration.json"
+        }],
+        "grammars": [{
+            "language": "hive-sql",
+            "scopeName": "source.hive",
+            "path": "./syntaxes/hive.tmLanguage.json"
+        }]
+    }
+}
