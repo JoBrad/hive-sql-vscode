@@ -1,119 +1,87 @@
 {
-    "CHANGE_TABLE_MANAGEMENT": {
+    "Change table management": {
         "prefix": "alter",
         "body": [
-            "USE ${schema_name};",
-            "ALTER TABLE ${table_name} SET TBLPROPERTIES('EXTERNAL' = 'TRUE')"
+            "USE ${1:schema_name}",
+            "ALTER TABLE ${2:table_name} SET TBLPROPERTIES('EXTERNAL' = '${3|TRUE,FALSE|}');"
         ]
     },
-    "CHANGE_TABLE_NAME": {
+    "Rename table": {
         "prefix": "alter",
         "body": [
-            "USE ${schema_name};",
-            "ALTER TABLE ${table_name} RENAME TO ${new_table_name};",
-            ";"
+            "USE ${1:schema_name};",
+            "ALTER TABLE ${2:table_name} RENAME TO ${3:new_table_name};"
         ],
         "description": "Rename a table."
     },
-    "CHANGE_TABLE_COMMENT": {
+    "Set table comment": {
         "prefix": "alter",
         "body": [
-            "USE ${schema_name};",
-            "ALTER TABLE ${table_name} SET TBLPROPERTIES ('comment' = '${new_comment}');",
-            ";"
+            "USE ${1:schema_name};",
+            "ALTER TABLE ${2:table_name} SET TBLPROPERTIES ('comment' = '${3:new_comment}');"
         ],
         "description": "Change a table's comment."
     },
-    "CHANGE_COLUMN": {
+    "Change partitioned table columns": {
         "prefix": "alter",
         "body": [
-            "USE ${schema_name};",
-            "ALTER TABLE ${table_name} PARTITION (${partition_spec})",
-            "CHANGE COLUMN ${old_column_name} ${new_column_name} ${column_data_type} COMMENT '${column_comment}'",
-            ";"
+            "USE ${1:schema_name};",
+            "ALTER TABLE ${2:table_name} PARTITION (${3:partition_spec})",
+            "CHANGE COLUMN ${4:old_column_name} ${5:new_column_name} ${6:column_data_type} COMMENT '${7:column_comment}';"
         ],
         "description": "Change a partitioned table's columns."
     },
-    "CREATE_TABLE_BASIC": {
-        "prefix": "create",
-        "body":[
-            "DROP TABLE IF EXISTS ${schema_name}.${table_name};",
-            "CREATE TABLE ${schema_name}.${table_name} ( ",
-            "\t${column_name} ${column_data_type} COMMENT '${column_comment}'",
-            ")",
-            ";"
+    "Change table columns": {
+        "prefix": "alter",
+        "body": [
+            "USE ${1:schema_name};",
+            "ALTER TABLE ${2:table_name}",
+            "CHANGE COLUMN ${3:old_column_name} ${4:new_column_name} ${5:column_data_type} COMMENT '${6:column_comment}';"
         ],
-        "description": "Create a new Hive table with full basic specifications."
+        "description": "Change a non-partitioned table's columns."
     },
-    "CREATE_TABLE": {
-        "prefix": "create",
-        "body":[
-            "DROP TABLE IF EXISTS ${schema_name}.${table_name};",
-            "CREATE TABLE ${schema_name}.${table_name} ( ",
-            "\t${column_name} ${column_data_type} COMMENT '${column_comment}'",
-            ")",
-            "COMMENT '${table_comment}'",
-            "ROW FORMAT DELIMITED ",
-            "\tFIELDS TERMINATED BY '|'",
-            "\tLINES TERMINATED BY '\\n'",
-            "STORED AS ",
-            "\tINPUTFORMAT 'org.apache.hadoop.mapred.TextInputFormat' ",
-            "\tOUTPUTFORMAT 'org.apache.hadoop.hive.ql.io.HiveIgnoreKeyTextOutputFormat' ",
-            "LOCATION ",
-            "\t'${HDFS_DIRECTORY}/${table_name}' ",
-            ";"
+    "Change a column": {
+        "prefix": "change",
+        "body": [
+            "CHANGE COLUMN ${1:old_column_name} ${2:new_column_name} ${3:column_data_type} COMMENT '${4:column_comment}';"
         ],
-        "description": "Create a new Hive table with full format specifications."
+        "description": "Specification for changing a column"
     },
-    "CREATE_TABLE_LIKE": {
+    "Create table from table": {
         "prefix": "create",
         "body": [
-            "CREATE TABLE IF NOT EXISTS ${schema_name}.${table_name}",
-            "LIKE ${source_table_schema}.${source_table_name}",
+            "CREATE TABLE IF NOT EXISTS ${1:schema_name}.${2:table_name}",
+            "LIKE ${3:source_table_schema}.${4:source_table_name}",
             ";"
         ],
         "description": "Create a table with the same format and structure as another table."
     },
-    "CREATE_TABLE_AS_SELECT": {
+    "Create table from query": {
         "prefix": "create",
         "body": [
-            "CREATE TABLE IF NOT EXISTS ${schema_name}.${table_name} AS ",
-            "\tSELECT ",
-            "\t\t${column_names}",
-            "\tFROM",
-            "\t\t${source_table_name}",
-            ";"
+            "CREATE TABLE IF NOT EXISTS ${1:schema_name}.${2:table_name} AS ",
+            "SELECT",
+            "    ${3:column_names}",
+            "FROM",
+            "    ${4:source_schema_name}.${5:source_table_name};"
         ],
         "description": "Create a table from the results of a query"
     },
-    "CREATE_TABLE_AS_SELECT_FORMAT": {
-        "prefix": "create",
+    "Select columns from a table": {
+        "prefix": "select",
         "body": [
-            "CREATE TABLE IF NOT EXISTS ${schema_name}.${table_name}",
-            "\tROW FORMAT SERDE \"${serde_type}\"",
-            "\tSTORED AS ${storage_type}",
-            "\tAS",
-            "SELECT ",
-            "${column_names}",
-            "FROM ${source_table_name}",
-            ";"
-        ],
-        "description": "Create a table from the results of a query, and specify the storage format"
+            "SELECT  ${1:column_names}",
+            "FROM    ${2:table_name};"
+        ]
     },
-    "INSERT_DYNAMIC": {
+    "Insert statement": {
         "prefix": "insert",
         "body": [
-            "SET hive.exec.dynamic.partition.mode = nonstrict;",
-            "SET hive.exec.dynamic.partition = true;",
-            "SET hive.exec.max.dynamic.partitions.pernode = 10000;",
-            "INSERT OVERWRITE TABLE ${schema_name}.${table_name} PARTITION (${partition_column_names})",
-            "\tSELECT ",
-            "\t\t${column_names}",
-            "\t\t${partition_column_names}",
-            "\tFROM",
-            "\t\t${source_table_name}",
-            ";"
-        ],
-        "description": "Insert into a table using dynamic partitioning."
+            "INSERT ${1|INTO,OVERWRITE|} TABLE ${2:schema_name}.${3:table_name}",
+            "SELECT",
+            "    ${4:column_names}",
+            "FROM",
+            "    ${5:source_schema_name}.${6:source_table_name};"
+        ]
     }
 }

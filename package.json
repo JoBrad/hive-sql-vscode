@@ -1,6 +1,6 @@
 {
     "name": "hive-sql",
-    "version": "0.0.1",
+    "version": "0.0.3",
     "displayName": "Hive SQL",
     "description": "Adds support for Hive's variant of the SQL language",
     "publisher": "josephtbradley",
@@ -11,7 +11,7 @@
     "license": "MIT",
     "icon": "./extras/apache_hive.png",
     "engines": {
-        "vscode": "^1.5.0"
+        "vscode": "^1.20.0"
     },
     "galleryBanner": {
         "color": "#FBED20",
@@ -23,10 +23,10 @@
     },
     "homepage": "https://github.com/JoBrad/hive-sql-vscode/blob/master/README.md",
     "categories": [
-        "Languages"
+        "Programming Languages", "Language Packs"
     ],
     "keywords": [
-        "Hive SQL", "Hive", "Apache", "SQL", "Impala"
+        "Hive SQL", "Hive", "Apache", "SQL", "Impala", "syntax"
     ],
     "preview": true,
     "contributes": {
@@ -40,6 +40,12 @@
             "language": "hive-sql",
             "scopeName": "source.hive",
             "path": "./syntaxes/hive.tmLanguage.json"
-        }]
+        }],
+        "snippets": [
+            {
+                "language": "hive-sql",
+                "path": "./snippets/hive-sql.json"
+            }
+        ]
     }
 }
