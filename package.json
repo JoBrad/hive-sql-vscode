@@ -23,7 +23,7 @@
     },
     "homepage": "https://github.com/JoBrad/hive-sql-vscode/blob/master/README.md",
     "categories": [
-        "Programming Languages", "Language Packs"
+        "Programming Languages"
     ],
     "keywords": [
         "Hive SQL", "Hive", "Apache", "SQL", "Impala", "syntax"
