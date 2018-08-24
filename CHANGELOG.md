@@ -8,3 +8,6 @@
 - Added snippets to package
 - Updated keywords and category for package
 - Added INNER to highlighted terms for SQL statements
+
+## 0.0.4
+- Updates to packaging

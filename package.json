@@ -1,6 +1,6 @@
 {
     "name": "hive-sql",
-    "version": "0.0.3",
+    "version": "0.0.4",
     "displayName": "Hive SQL",
     "description": "Adds support for Hive's variant of the SQL language",
     "publisher": "josephtbradley",
@@ -9,12 +9,12 @@
         "email": "jtbradley@gmail.com"
     },
     "license": "MIT",
-    "icon": "./extras/apache_hive.png",
+    "icon": "extras/apache_hive.png",
     "engines": {
         "vscode": "^1.20.0"
     },
     "galleryBanner": {
-        "color": "#FBED20",
+        "color": "#F2C45A",
         "theme": "dark"
     },
     "repository": {
@@ -26,7 +26,7 @@
         "Programming Languages"
     ],
     "keywords": [
-        "Hive SQL", "Hive", "Apache", "SQL", "Impala", "syntax"
+        "Hive SQL", "Hive", "SQL", "Impala"
     ],
     "preview": true,
     "contributes": {
