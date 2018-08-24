@@ -11,3 +11,13 @@ Enables syntax highlighting and formatting for Hive SQL, including user-defined 
 The screenshot below is using the wonderful [Monokai Dark Soda](https://marketplace.visualstudio.com/items?itemName=AdamCaviness.theme-monokai-dark-soda) theme. This is my first extension, and contributions are welcome, via GitHub.
 
 ![Screenshot](./extras/screenshot.png)
+
+## Release Notes
+
+### 0.0.1
+
+Initial release
+
+### 0.0.2
+
+Minor updates to packaging.
