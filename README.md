@@ -10,11 +10,11 @@ Enables syntax highlighting and formatting for Hive SQL, including user-defined 
 
 **To enable the extension on your file, either name the file with a extension:**
 
-**.hql**
+* **.hql**
 
-**.ql**
+* **.ql**
 
-**.q**
+* **.q**
 
 **Or press F1, type 'Change Language Mode', and then choose HiveSQL.**
 
