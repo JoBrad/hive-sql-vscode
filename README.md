@@ -6,7 +6,17 @@ The language specification is from the [hive-sublime-text](https://github.com/gl
 
 ## Features
 
-Enables syntax highlighting and formatting for Hive SQL, including user-defined functions. To enable the extension on your file, either name the file with a .hql, .q, or .ql extension, or press F1, type 'Change Language Mode', and then choose HiveSQL.
+Enables syntax highlighting and formatting for Hive SQL, including user-defined functions.
+
+**To enable the extension on your file, either name the file with a extension:**
+
+* **.hql**
+
+* **.ql**
+
+* **.q**
+
+**Or press F1, type 'Change Language Mode', and then choose HiveSQL.**
 
 The screenshot below is using the wonderful [Monokai Dark Soda](https://marketplace.visualstudio.com/items?itemName=AdamCaviness.theme-monokai-dark-soda) theme. This is my first extension, and contributions are welcome, via GitHub.
 
